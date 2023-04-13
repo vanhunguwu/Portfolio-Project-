@@ -105,6 +105,19 @@ where dea.continent is not null ;
 select * , (RollingpeopleVaccinated/population)*100 as VaccinatedPercentage
 from #temp_PopvsVac 
 
+Create view VaccinatedPercentage as 
+select dea.continent,dea.location, dea.date , dea.population, vac.new_vaccinations,
+sum(cast(vac.new_vaccinations as bigint )) over (partition by dea.Location order by 
+dea.location , dea.date ) as RollingpeopleVaccinated 
+From [dbo].[CovidVaccinations] vac 
+join  [dbo].[CovidDeaths] dea 
+	on vac.date = dea.date
+	and vac.location = dea.location  
+where dea.continent is not null ;
+
+select * , (RollingpeopleVaccinated/population ) *100
+from VaccinatedPercentage
+^^
 
 
 
