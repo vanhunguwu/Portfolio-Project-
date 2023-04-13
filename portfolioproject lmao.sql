@@ -5,7 +5,7 @@ where location like '%income%'
 order by 1,2
 
 select *
-from [dbo].[CovidVaccinations]
+from [dbo].[CovidVaccinations]  
 
 Select Location , date , total_cases , total_deaths, (total_deaths/total_cases)*100 as DeathPercentage 
 From [dbo].[CovidDeaths]
@@ -67,7 +67,7 @@ join  [dbo].[CovidDeaths] dea
 where dea.continent is not null 
 order by 2,3 
 
---USE CTE table here to see the Vaccinated percentage 
+--option 1 , USE CTE table here to see the Vaccinated percentage 
 With PopvsVac (continent,location, date , population, new_vaccinations,RollingpeopleVaccinated)
 as
 (select dea.continent,dea.location, dea.date , dea.population, vac.new_vaccinations,
